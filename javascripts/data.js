@@ -99,6 +99,21 @@ var dinoGetter = function() {
     });
 };
 
+
+//use sometimes
+var dinoGetter = function(){
+	Promise.all([firstDinosaurJson(), secondDinosaurJson(), thirdDinosaurJson()]).then(function(results){
+		console.log("resluts", results);
+	}).catch(function(error){
+		console.log(error);
+	})
+};
+
+
+
+
+
+
 var makeDinos = function(){
 	dinosaurs.forEach(function(dino){
 		dom(dino);
