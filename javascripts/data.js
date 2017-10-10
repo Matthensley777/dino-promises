@@ -60,13 +60,18 @@ var dinoGetter = function(){
 		results.forEach(function(dino){
 			dinosaurs.push(dino);
 		});
-	console.log("results1", dinosaurs);
 
 	secondDinosaurJson().then(function(results2){
 		results2.forEach(function(dino){
 		dinosaurs.push(dino);
 		});
 	});
+	thirdDinosaurJson().then(function(results3){
+		results3.forEach(function(dino){
+		dinosaurs.push(dino);
+		});
+	});
+	console.log("results1", dinosaurs);
 	}).catch(function(error){
 		console.log("error1", error);
 	});
