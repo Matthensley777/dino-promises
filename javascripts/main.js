@@ -1,6 +1,6 @@
 "use strict";
 
-var data = require('/.data');
+var data = require("/.data");
 
 
 $(document).ready(function() {
