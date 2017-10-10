@@ -8,7 +8,7 @@ let outputDiv = $('#dinosaur');
 const domString = (dinosaur) => {
 	let dinoString = '';
 	dinoString += `<div>`;
-	dinoString += `<h1>${dinosaur.name}</h1>`;
+	dinoString += `<h1>${dinosaur.type}</h1>`;
 	dinoString += `</div>`;
 	printToDom(domString);
 };
