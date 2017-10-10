@@ -1,3 +1,10 @@
 "use strict";
 
-console.log("hello");
+var data = require('/.data');
+
+
+$(document).ready(function() {
+	data.initializer();
+
+});
+
