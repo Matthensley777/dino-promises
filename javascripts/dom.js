@@ -14,7 +14,7 @@ const domString = (dinosaur) => {
 };
 
 
-var printToDom = function(strang) {
+let printToDom = (strang) => {
 	outputDiv.append(strang);
 };
 
