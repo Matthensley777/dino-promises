@@ -1,40 +1,106 @@
 "use strict";
 
-const dom = require("./dom");
+const dom = require('./dom');
 
 let dinosaurs = [];
 
 
 
 const firstDinosaurJson = () => {
-    return new Promise(function(resolve, reject) {
-        $.ajax('/data/dinosaurs.json').done(function(data1) {
+    return new Promise((resolve, reject) => {
+        $.ajax('/data/dinosaurs.json').done((data1) => {
             resolve(data1.dinosaurs1);
-        }).fail(function(error1) {
+        }).fail((error1) => {
             reject(error1);
         });
     });
 };
 
 const secondDinosaurJson = () => {
-    return new Promise(function(resolve, reject) {
-        $.ajax('/data/dinosaurs2.json').done(function(data2) {
+    return new Promise((resolve, reject) => {
+        $.ajax('/data/dinosaurs2.json').done((data2) => {
             resolve(data2.dinosaurs2);
-        }).fail(function(error2) {
+        }).fail((error2) => {
             reject(error2);
         });
     });
 };
 
 const thirdDinosaurJson = () => {
-    return new Promise(function(resolve, reject) {
-        $.ajax('/data/dinosaurs3.json').done(function(data3) {
+    return new Promise((resolve, reject) => {
+        $.ajax('/data/dinosaurs3.json').done((data3) => {
             resolve(data3.dinosaurs3);
-        }).fail(function(error3) {
+        }).fail((error3) => {
             reject(error3);
         });
     });
 };
+
+const allTheCats = () => {
+    return new Promise((resolve, reject) => {
+        $.ajax('/data/cats.json').done((data4) => {
+            resolve(data4.cats);
+        }).fail((error4) => {
+            reject(error4);
+        });
+    });
+};
+
+
+
+//use sometimes
+const dinoGetter = () => {
+    Promise.all([firstDinosaurJson(), secondDinosaurJson(), thirdDinosaurJson()]).then((results) => {
+        allTheCats().then((cats) => {
+        results.forEach((result) => {
+            result.forEach((dino) => {
+                dino.snacks = [];
+                dino.catIds.forEach((catId) => {
+                    console.log("catId", catId);
+                    cats.forEach((cat)=>{
+                        if(cat.id === catId){
+                            dino.snacks.push(cat);
+                        }
+                    });
+                });
+                dinosaurs.push(dino);
+            });
+        });
+        makeDinos();
+    });
+
+        console.log("dino", dinosaurs);
+        
+    }).catch((error) => {
+        console.log(error);
+    });
+};
+
+
+const makeDinos = () => {
+    dinosaurs.forEach((dino) => {
+        dom(dino);
+    });
+};
+
+const initializer = () => {
+    dinoGetter();
+};
+
+const getDinosaurs = () => {
+    return dinosaurs;
+};
+
+module.exports = {
+    initializer: initializer,
+    getDinosaurs: getDinosaurs
+};
+
+
+
+
+
+
 
 
 
@@ -58,39 +124,3 @@ const thirdDinosaurJson = () => {
 //         makeDinos();
 //     });
 // };
-
-
-//use sometimes
-const dinoGetter = () => {
-	Promise.all([firstDinosaurJson(), secondDinosaurJson(), thirdDinosaurJson()]).then(function(results){
-		console.log("resluts", results);
-		results.forEach(function(result){
-			result.forEach(function(dino){
-				dinosaurs.push(dino);
-			});
-		});
-		makeDinos();
-	}).catch(function(error){
-		console.log(error);
-	});
-};
-
-
-const makeDinos = () => {
-	dinosaurs.forEach(function(dino){
-		dom(dino);
-	});
-};
-
-const initializer = () => {
-    dinoGetter();
-};
-
-const getDinosaurs = () => {
-    return dinosaurs;
-};
-
-module.exports = {
-    initializer: initializer,
-    getDinosaurs: getDinosaurs
-};

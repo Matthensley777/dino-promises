@@ -1,10 +1,8 @@
 "use strict";
 
-let data = require("/.data");
+const data = require('./data');
 
-
-$(document).ready(function() {
+$(document).ready(() => {
 	data.initializer();
-
 });
 

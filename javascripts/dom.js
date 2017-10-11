@@ -1,20 +1,17 @@
 "use strict";
 
-let main = require("./main");
+const outputDiv = $('#dinosaurs');
 
-
-let outputDiv = $('#dinosaur');
-
-const domString = (dinosaur) => {
-	let dinoString = '';
-	dinoString += `<div>`;
-	dinoString += `<h1>${dinosaur.type}</h1>`;
-	dinoString += `</div>`;
-	printToDom(domString);
+const domString = (dinosaurs) => {
+	let domStrang = '';
+      domStrang += `<div>`;
+      domStrang +=   `<h1>${dinosaurs.type}</h1>`;
+      domStrang += `</div>`;
+	printToDom(domStrang);
 };
 
 
-let printToDom = (strang) => {
+const printToDom = (strang) => {
 	outputDiv.append(strang);
 };
 
