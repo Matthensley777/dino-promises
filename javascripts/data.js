@@ -1,14 +1,12 @@
 "use strict";
 
-const dom = require('./dom');
+var dom = require('./dom');
 
-let dinosaurs = [];
+var dinosaurs = [];
 
-
-
-const firstDinosaurJson = () => {
+const firstDinosaurJSON = () => {
     return new Promise((resolve, reject) => {
-        $.ajax('/data/dinosaurs.json').done((data1) => {
+        $.ajax('./data/dinosaurs.json').done((data1) => {
             resolve(data1.dinosaurs1);
         }).fail((error1) => {
             reject(error1);
@@ -16,9 +14,9 @@ const firstDinosaurJson = () => {
     });
 };
 
-const secondDinosaurJson = () => {
+const secondDinosaurJSON = () => {
     return new Promise((resolve, reject) => {
-        $.ajax('/data/dinosaurs2.json').done((data2) => {
+        $.ajax('./data/dinosaurs2.json').done((data2) => {
             resolve(data2.dinosaurs2);
         }).fail((error2) => {
             reject(error2);
@@ -26,9 +24,9 @@ const secondDinosaurJson = () => {
     });
 };
 
-const thirdDinosaurJson = () => {
+const thirdDinosaurJSON = () => {
     return new Promise((resolve, reject) => {
-        $.ajax('/data/dinosaurs3.json').done((data3) => {
+        $.ajax('./data/dinosaurs3.json').done((data3) => {
             resolve(data3.dinosaurs3);
         }).fail((error3) => {
             reject(error3);
@@ -38,44 +36,36 @@ const thirdDinosaurJson = () => {
 
 const allTheCats = () => {
     return new Promise((resolve, reject) => {
-        $.ajax('/data/cats.json').done((data4) => {
-            resolve(data4.cats);
-        }).fail((error4) => {
-            reject(error4);
+        $.ajax('./data/cats.json').done((catData) => {
+            resolve(catData.cats);
+        }).fail((error) => {
+            reject(error);
         });
     });
 };
 
-
-
-//use sometimes
 const dinoGetter = () => {
-    Promise.all([firstDinosaurJson(), secondDinosaurJson(), thirdDinosaurJson()]).then((results) => {
-        allTheCats().then((cats) => {
-        results.forEach((result) => {
-            result.forEach((dino) => {
-                dino.snacks = [];
-                dino.catIds.forEach((catId) => {
-                    console.log("catId", catId);
-                    cats.forEach((cat)=>{
-                        if(cat.id === catId){
-                            dino.snacks.push(cat);
-                        }
+    Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then((results) => {
+        allTheCats().then((cats) =>{
+            results.forEach((result) => {
+                result.forEach((dino) => {
+                    dino.snacks = [];
+                    dino.catIds.forEach((catId) =>{
+                        cats.forEach((cat) => {
+                            if(cat.id === catId){
+                                dino.snacks.push(cat);
+                            }
+                        });
                     });
+                    dinosaurs.push(dino);
                 });
-                dinosaurs.push(dino);
             });
+            makeDinos();
         });
-        makeDinos();
-    });
-
-        console.log("dino", dinosaurs);
-        
     }).catch((error) => {
-        console.log(error);
+        console.log("error from Promise.all", error);
     });
 };
-
 
 const makeDinos = () => {
     dinosaurs.forEach((dino) => {
@@ -84,24 +74,14 @@ const makeDinos = () => {
 };
 
 const initializer = () => {
-    dinoGetter();
+    dinoGetter();   
 };
 
 const getDinosaurs = () => {
     return dinosaurs;
 };
 
-module.exports = {
-    initializer: initializer,
-    getDinosaurs: getDinosaurs
-};
-
-
-
-
-
-
-
+module.exports = {initializer:initializer, getDinosaurs:getDinosaurs};
 
 
 //use for most promises

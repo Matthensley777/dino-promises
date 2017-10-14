@@ -1,11 +1,11 @@
 "use strict";
 
-const outputDiv = $('#dinosaurs');
+const outputDiv = $('#dinosaur');
 
-const domString = (dinosaurs) => {
+const domString = (dinosaur) => {
 	let domStrang = '';
       domStrang += `<div>`;
-      domStrang +=   `<h1>${dinosaurs.type}</h1>`;
+      domStrang +=   `<h1>${dinosaur.type}</h1>`;
       domStrang += `</div>`;
 	printToDom(domStrang);
 };
